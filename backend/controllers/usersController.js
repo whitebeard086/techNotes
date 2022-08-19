@@ -9,7 +9,7 @@ const bcrypt = require("bcrypt");
 const getAllUsers = asyncHandler(async (req, res) => {
   const users = await User.find().select("-password").lean();
 
-  if (!users) {
+  if (!users?.length) {
     return res.status(400).json({ message: "No users found" });
   }
 
@@ -106,8 +106,8 @@ const deleteUser = asyncHandler(async (req, res) => {
   }
 
   // Check if user has assigned notes
-  const notes = await Note.findOne({ user: id }).lean().exec();
-  if (notes?.length) {
+  const note = await Note.findOne({ user: id }).lean().exec();
+  if (note) {
     return res.status(400).json({ message: "User has assigned notes " });
   }
 
