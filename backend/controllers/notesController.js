@@ -37,7 +37,7 @@ const createNewNote = asyncHandler(async (req, res) => {
   // Check for duplicate title
   const duplicate = await Note.findOne({ title }).lean().exec();
 
-  if (!duplicate) {
+  if (duplicate) {
     return res.status(409).json({ message: "Duplicate note title" });
   }
 
@@ -51,7 +51,43 @@ const createNewNote = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc Update a note
+// @route PATCH /notes
+// @access Private
+const updateNote = asyncHandler(async (req, res) => {
+  const { id, user, title, text, completed } = req.body;
+
+  // Confirm data exists
+  if (!id || !user || !title || !text || typeof completed !== "boolean") {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  // Check if note exists
+  const note = await Note.findById(id).exec();
+
+  if (!note) {
+    return res.status(404).json({ message: "Note not found" });
+  }
+
+  // Check for duplicate title
+  const duplicate = await Note.findOne({ title }).lean().exec();
+
+  if (duplicate && duplicate?._id.toString() !== id) {
+    return res.status(409).json({ message: "Duplicate note title" });
+  }
+
+  note.user = user;
+  note.title = title;
+  note.text = text;
+  note.completed = completed;
+
+  const updatedNote = await note.save();
+
+  res.json(`${updatedNote.title} updated`);
+});
+
 module.exports = {
   getAllNotes,
   createNewNote,
+  updateNote,
 };
