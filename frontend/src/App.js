@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
-import { DashLayout, Layout, Login, Public } from "./components"; 
+import { DashLayout, Layout, Public } from "./components"; 
+import { Login } from "./features";
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
         <Route path="login" element={<Login />} />
 
         <Route path="dash" element={<DashLayout />}>
-          
+
         </Route>
 
       </Route>
