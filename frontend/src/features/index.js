@@ -1,4 +1,5 @@
 export { default as Login } from "./auth/Login";
+export { default as Prefetch } from "./auth/Prefetch";
 export { default as Welcome } from "./auth/Welcome";
 export { default as EditNote } from "./notes/EditNote";
 export { default as NewNote } from "./notes/NewNote";
