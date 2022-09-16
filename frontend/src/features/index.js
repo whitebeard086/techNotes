@@ -2,6 +2,7 @@ export { default as Login } from "./auth/Login";
 export { default as Prefetch } from "./auth/Prefetch";
 export { default as PersistLogin } from "./auth/PersistLogin";
 export { default as Welcome } from "./auth/Welcome";
+export { default as RequireAuth } from "./auth/RequireAuth";
 export { default as EditNote } from "./notes/EditNote";
 export { default as NewNote } from "./notes/NewNote";
 export { default as NotesList } from "./notes/NotesList";
